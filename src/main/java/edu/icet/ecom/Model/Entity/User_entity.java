@@ -1,7 +1,17 @@
 package edu.icet.ecom.Model.Entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.scheduling.config.Task;
+
+import java.util.List;
+
 @Entity
 @Table(name = "users")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class User_entity {
     @Id
@@ -15,11 +25,11 @@ public class User_entity {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> tasks;
+    private List<Task_entity> tasks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Meal> meals;
+    private List<Meal_entity> meals;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Activity> activities;
+    private List<Activity_entity> activities;
 }
