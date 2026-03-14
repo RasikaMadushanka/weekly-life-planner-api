@@ -1,14 +1,12 @@
 package edu.icet.ecom.Controller;
 
+import edu.icet.ecom.Model.Dto.User_Reprt_dto;
 import edu.icet.ecom.Model.Dto.User_dto;
 import edu.icet.ecom.Service.User_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -19,7 +17,16 @@ public class User_Controller {
 
     @PostMapping("/register")
     public ResponseEntity<User_dto>resgiterUser(@RequestBody User_dto userDto){
-        return new ResponseEntity<>(userService.saveUSer(User_dto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUSer(userDto), HttpStatus.CREATED);
 
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<User_dto>getUserProfile(@PathVariable Long id){
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+    @GetMapping("/{id}/report")
+    public ResponseEntity<User_Reprt_dto>getUsersReport(@PathVariable Long id){
+        User_Reprt_dto report = userService.generateWeeklyReport(id);
+        return ResponseEntity.ok(report);
     }
 }
