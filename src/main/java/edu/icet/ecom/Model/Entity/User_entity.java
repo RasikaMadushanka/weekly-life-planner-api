@@ -17,6 +17,11 @@ public class User_entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer age;
+    private Double weight; // in kg
+    private Double height; // in cm
+    private String medicalIssues;
+    private String fitnessGoal; // e.g., "Weight Loss", "Muscle Gain", "Maintenance"
 
     @Column(nullable = false)
     private String name;
