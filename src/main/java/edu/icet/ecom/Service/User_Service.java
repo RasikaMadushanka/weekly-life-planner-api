@@ -29,7 +29,7 @@ public class User_Service  {
     public User_Reprt_dto generateWeeklyReport(Long id) {
         User_entity user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        return modelMapper.map(user, User_Reprt_dto.class);
+        User_Reprt_dto report = modelMapper.map()
     }
 
 
