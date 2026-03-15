@@ -18,9 +18,7 @@ public class Task_entity {
     private String title;
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private Priority priority; // HIGH, MEDIUM, LOW
-
+    private String priority;
     private LocalDateTime deadline;
     private boolean isCompleted = false;
 
