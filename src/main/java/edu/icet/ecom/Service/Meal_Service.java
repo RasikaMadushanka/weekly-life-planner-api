@@ -25,7 +25,8 @@ public class Meal_Service {
         Meal_entity existingMeal = mealRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("Meal Not Found"));
         existingMeal.setMealName(mealDto.getMealName());
-        Meal_entity updated=mealRepository.save(existingMeal);
+        existingMeal.setCalories(mealDto.getCalories());
+        existingMeal.setType(mealDto.getType());        Meal_entity updated=mealRepository.save(existingMeal);
         return modelMapper.map(updated, Meal_dto.class);
     }
 
