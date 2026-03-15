@@ -7,6 +7,8 @@ import edu.icet.ecom.Repository.User_Repository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class User_Service  {
     @Autowired
     private User_Repository userRepository;
@@ -28,5 +30,12 @@ public class User_Service  {
         User_entity user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return modelMapper.map(user, User_Reprt_dto.class);
+    }
+
+
+    public List<User_dto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> modelMapper.map(user, User_dto.class))
+                .toList();
     }
 }
