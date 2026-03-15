@@ -24,7 +24,9 @@ public class Activity_Service {
         Activity_entity existingActivity = activityRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("Activity Not Found"));
         existingActivity.setActivityName(activityDto.getActivityName());
-        Activity_entity updated=activityRepository.save(existingActivity);
+        existingActivity.setCategory(activityDto.getCategory());
+        existingActivity.setStartTime(activityDto.getStartTime());
+        existingActivity.setEndTime(activityDto.getEndTime());        Activity_entity updated=activityRepository.save(existingActivity);
         return modelMapper.map(updated, Activity_dto.class);
     }
 
