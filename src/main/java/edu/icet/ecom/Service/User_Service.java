@@ -35,18 +35,37 @@ public class User_Service  {
         return modelMapper.map(saveduser, User_dto.class);
     }
     private void assignInitialPlan(User_entity user) {
-        if(user.getHeight() == null || user.getHeight() == null) return;
-        double heightInMeters = user.getHeight()/100;
+        if (user.getHeight() == null || user.getWeight() == null) return;
+
+        // Use 100.0 to prevent integer division errors
+        double heightInMeters = user.getHeight() / 100.0;
         double BMI = user.getWeight() / (heightInMeters * heightInMeters);
-        if (BMI > 25.0) {
-            autoAssignPlans(user, "Weight Loss Plan", "Daily 30min Cardio", "Oatmeal", 300, "Evening Jogging", "Exercise");
-        } else if (BMI < 18.5) {
-            autoAssignPlans(user, "Weight Gain Plan", "Strength Training", "Protein Pasta", 800, "Muscle Recovery Nap", "Leisure");
-        } else {
-            autoAssignPlans(user, "Maintenance Plan", "Yoga & Stretching", "Balanced Salad", 500, "Nature Walk", "Relaxation");
+
+        for (int i = 0; i < 7; i++) {
+            LocalDateTime dayOffset = LocalDateTime.now().plusDays(i);
+
+            if (BMI > 25.0) {
+                // WEIGHT LOSS: High Protein, Low Carb, Double Cardio
+                autoAssignPlans(user, day,
+                        "Cardio Session", "Morning 5km Run", "Hydration Task", "Drink 3L Water",
+                        "Oats", 250, "Almonds", 100, "Salad", 350, "Fruit", 80, "Grilled Chicken", 400,
+                        "Yoga", "Exercise", "Brisk Walk", "Fat Burn");
+            } else if (BMI < 18.5) {
+                // WEIGHT GAIN: High Calorie, Strength Focus
+                autoAssignPlans(user, day,
+                        "Gym Session", "Heavy Lifting", "Protein Intake", "Eat 150g Protein",
+                        "Smoothie", 500, "Peanut Butter", 300, "Pasta", 800, "Yogurt", 200, "Steak", 700,
+                        "Weight Training", "Strength", "Evening Stretch", "Recovery");
+            } else {
+                // MAINTENANCE: Balanced
+                autoAssignPlans(user, day,
+                        "Step Count", "Reach 10k Steps", "Reading", "Read 10 pages",
+                        "Eggs", 300, "Walnuts", 150, "Rice & Curry", 600, "Tea", 50, "Soup", 300,
+                        "Jogging", "Cardio", "Meditation", "Mental Health");
+            }
         }
     }
-    private  void autoAssignPlans(User_entity user, String title,String taskDescription ,String mealName ,int cal ,String activityName ,String category){
+    private  void autoAssignPlans(User_entity user, String title, String taskDescription, String mealName, int cal, String activityName, String category, LocalDateTime date){
         Task_entity task = new Task_entity();
         task.setTitle(title);
         task.setDescription(taskDescription);
