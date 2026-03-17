@@ -65,7 +65,9 @@ public class User_Service  {
             }
         }
     }
-    private  void autoAssignPlans(User_entity user, String title, String taskDescription, String mealName, int cal, String activityName, String category, LocalDateTime date){
+    private  void autoAssignPlans(User_entity user, LocalDateTime date, String title, String taskDescription,
+                                  String m1, int c1, String m2, int c2, String m3, int c3,
+                                  String activityName, String category){
         Task_entity task = new Task_entity();
         task.setTitle(title);
         task.setDescription(taskDescription);
