@@ -45,29 +45,22 @@ public class User_Service  {
             LocalDateTime dayOffset = LocalDateTime.now().plusDays(i);
 
             if (BMI > 25.0) {
-                // WEIGHT LOSS: High Protein, Low Carb, Double Cardio
-                autoAssignPlans(user, day,
-                        "Cardio Session", "Morning 5km Run", "Hydration Task", "Drink 3L Water",
-                        "Oats", 250, "Almonds", 100, "Salad", 350, "Fruit", 80, "Grilled Chicken", 400,
-                        "Yoga", "Exercise", "Brisk Walk", "Fat Burn");
+                // Calling your method multiple times to add MORE data per day
+                autoAssignPlans(user, "Weight Loss Task", "Morning Run", "Oatmeal", 300, "Jogging", "Exercise", dayOffset);
+                autoAssignPlans(user, "Hydration", "Drink 3L Water", "Salad", 400, "Brisk Walk", "Cardio", dayOffset);
+                autoAssignPlans(user, "Evening Task", "Stretching", "Grilled Fish", 350, "Yoga", "Relaxation", dayOffset);
             } else if (BMI < 18.5) {
-                // WEIGHT GAIN: High Calorie, Strength Focus
-                autoAssignPlans(user, day,
-                        "Gym Session", "Heavy Lifting", "Protein Intake", "Eat 150g Protein",
-                        "Smoothie", 500, "Peanut Butter", 300, "Pasta", 800, "Yogurt", 200, "Steak", 700,
-                        "Weight Training", "Strength", "Evening Stretch", "Recovery");
+                autoAssignPlans(user, "Gain Task", "Heavy Lifting", "Protein Shake", 500, "Gym", "Strength", dayOffset);
+                autoAssignPlans(user, "Nutrition", "High Carb Lunch", "Pasta", 800, "Nap", "Recovery", dayOffset);
+                autoAssignPlans(user, "Dinner Task", "Calorie Surplus", "Steak", 700, "Evening Walk", "Leisure", dayOffset);
             } else {
-                // MAINTENANCE: Balanced
-                autoAssignPlans(user, day,
-                        "Step Count", "Reach 10k Steps", "Reading", "Read 10 pages",
-                        "Eggs", 300, "Walnuts", 150, "Rice & Curry", 600, "Tea", 50, "Soup", 300,
-                        "Jogging", "Cardio", "Meditation", "Mental Health");
+                autoAssignPlans(user, "Balance Task", "10k Steps", "Eggs", 400, "Jogging", "Fitness", dayOffset);
+                autoAssignPlans(user, "Mindfulness", "Reading", "Rice & Curry", 600, "Meditation", "Mental Health", dayOffset);
+                autoAssignPlans(user, "Rest", "Sleep 8 Hours", "Soup", 300, "Nature Walk", "Relaxation", dayOffset);
             }
         }
     }
-    private  void autoAssignPlans(User_entity user, LocalDateTime date, String title, String taskDescription,
-                                  String m1, int c1, String m2, int c2, String m3, int c3,
-                                  String activityName, String category){
+    private  void autoAssignPlans(User_entity user, String title, String taskDescription, String mealName, int cal, String activityName, String category, LocalDateTime date){
         Task_entity task = new Task_entity();
         task.setTitle(title);
         task.setDescription(taskDescription);
@@ -83,8 +76,8 @@ public class User_Service  {
         Activity_entity activity = new Activity_entity();
         activity.setActivityName(activityName);
         activity.setCategory(category);
-        activity.setStartTime(LocalDateTime.now().plusHours(2)); // Schedule for 2 hours from now
-        activity.setEndTime(LocalDateTime.now().plusHours(3));
+        activity.setStartTime(date.withHour(8).withMinute(0));
+        activity.setEndTime(date.withHour(9).withMinute(0));
         activity.setUser(user);
         activityRepository.save(activity);
 
