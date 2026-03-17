@@ -12,10 +12,11 @@ import edu.icet.ecom.Repository.Task_Repository;
 import edu.icet.ecom.Repository.User_Repository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Service
 public class User_Service  {
     @Autowired
     private User_Repository userRepository;

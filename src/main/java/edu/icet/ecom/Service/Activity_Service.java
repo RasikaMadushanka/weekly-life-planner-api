@@ -6,9 +6,10 @@ import edu.icet.ecom.Repository.Activity_Repository;
 import org.jspecify.annotations.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class Activity_Service {
     @Autowired
     private Activity_Repository activityRepository;
